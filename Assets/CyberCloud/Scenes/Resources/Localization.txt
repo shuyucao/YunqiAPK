@@ -1,0 +1,69 @@
+﻿KEY,zh,en,ko,ja,fr,de,it,es
+Flag,Flag-US,Flag-US,Flag-FR,Flag-JP,Flag-FR,Flag-FR,Flag-FR,Bandera-FR
+Language,Chinese,English,Korean,Japanese
+Home_NoNet,"网络连接失败，请检查您的网络~","No internet connected，please try again.",네트워크 연결이 끊겼습니다. 다시 시도해주세요.,ネットワークに接続していません、通信状況をご確認の上、もう一度お試しください,"Keine Internetverbindung, bitte erneut versuchen.","Non connesso a internet, riprova.","No hay conexión a Internet, por favor, inténtelo de nuevo"
+Home_Category,加载中...,Loading...,로딩중…,リストを読み込み中．．．,Chargement...,Laden ...,Caricamento...,Cargando...
+Home_Category_Failed,网络请求超时，请检查网络,"Network request timeout, please try again",네트워크 연결이 끊겼습니다.,ネットワーク・リクエストはタイムアウトしました、通信状況をご確認の上、もう一度お試しください,"Zeitüberschreitung bei Netzwerkanforderung, bitte erneut versuchen.","Richiesta di rete scaduta, riprova.","Tiempo de espera de red agotado, por favor inténtelo de nuevo"
+Home_Exit,再按一次退出！,Press one more time to quit！,종료 버튼을 다시 눌러주세요!,再クリックして終了します。,Noch einmal drücken zum Beenden!,"Per uscire, premi ancora una volta!",¡Pulse otra vez para salir!
+Left_Menu_Local,本地,Local,로컬,ローカル,Lokal,Locale,Local
+Left_Menu_Setting,设置,Settings,설정,設定,Paramètres,Einstellungen,Impostazioni,Ajustes
+Home_Category_All,全部,All,전체 메뉴,すべて,Tout,Alle,Tutti,Todo
+Bar_First,已到第一页,First page already,첫페이지 입니다.,最初です,Déjà la première page,Schon auf erster Seite,Già alla prima pagina,La primera página ya
+Bar_Last,已到最后一页,Last page already,마지막 페이지 입니다.,最後です,Déjà la dernière page,Schon auf letzter Seite,Già all'ultima pagina,La última página ya
+Player_DownloadPhoto_Failed,图片加载失败,Photo loaded failed,이미지 로딩 실패,画像読み込みができません、,Échec du chargement de la photo,Laden des Fotos fehlgeschlagen,Caricamento foto non riuscito,Fallo al cargar la foto
+PlayerScroll_Out_Storage,存储空间不足,Not enough storage,불충분한 저장용량,空き容量が足りません,Stockage insuffisant,Nicht genug Speicher,Spazio insufficiente,No hay suficiente almacenamiento
+SettingPage_Clear,清除,Clear,삭제,削除,Effacer,Leeren,Cancella,Limpiar
+Loading,下载中...,Downloading,다운로드중,読み込み中．．．,Téléchargement,Wird heruntergeladen,Download in corso,Descargando
+Loading2,加载中...,Loading...,로딩중…,リストを読み込み中．．．,Chargement...,Laden ...,Caricamento in corso...,Cargando...
+Net_Slow,当前网络缓慢，请耐心等待,"Network is slow, please be patient.",인터넷 속도가 느립니다. 잠시만 기다려 주세요.,電波が弱いのため、しばらくお待ちしてください,"Le réseau est lent, merci de patienter.","Netzwerk ist langsam, bitte haben Sie Geduld.","Rete lenta, abbi pazienza.","La red es lenta, sea paciente"
+Image_Logo_New,New,New,신규,New,New,New,New
+Image_Logo_AP,AirPano,AirPano,AirPano,AirPano,AirPano,AirPano,AirPano
+LoadFail_Tip,加载失败,Load Failed,로딩 실패,読み込みできませんでした,Échec du chargement,Laden fehlgeschlagen,Caricamento non riuscito,Carga fallida
+Update_Force,现有新的版本可供升级，为了更好的使用体验，请立即升级,New version is available to update. Installation is recommended. \nDo you want to update right now?,새로운 앱 버전이 나왔습니다. 업데이트해주세요. ,新バージョンが出ました。アップデート確定しますか？,"Une nouvelle version est disponible à la mise à jour. L'installation est recommandée.\nVoulez-vous mettre à jour maintenant ?","Neue Version steht zum Update zur Verfügung. Installation wird empfohlen. \nMöchten Sie jetzt gleich updaten?","Nuova versione disponibile. Si consiglia di effettuare l'installazione. Vuoi  effettuare l'aggiornamento ora?","Hay una nueva versión disponible para actualización. Se recomienda su instalación.\n¿Quiere actualizarla ahora? "
+Update,更新,Update,업데이트,はい,Mettre à jour,Update,Aggiorna,Actualizar
+Cancel,取消,Cancel,취소,いいえ,Annuler,Abbrechen,Annulla,Cancelar
+Updating,更新中,Updating,업데이트중,アップデート中,Mise à jour,Update wird durchgeführt,Aggiornamento,Actualizando
+Installing,安装中,Installing,설치중,インストール中,Installation,Installieren,Installazione,Instalando
+Install_Failed,安装失败,Install failed,설치 실패,インストールできません,Échec de l'installation,Installieren fehlgeschlagen,Installazione non riuscita,La instalación ha fallado
+Click_Too_Fast,亲，您点的太快了！,Clicking too fast!,너무 빨리 입력하셨습니다.,しばらくお待ちして再クリックしてください,Clics trop rapides !,Zu schnell geklickt!,Stai cliccando troppo velocemente!,¡Hace clic demasiado rápido!
+Controller_Connected,控制器已连接\n请长按Home键使射线置中,"The controller is connected\nPlease press the Home key calibration",컨트롤러가 연결되었습니다. 홈버튼을 길게 눌러 가운데 정렬하세요.,"コントローラーが接続しました。ホームボタンを長押ししてセンターに調整できます。","La manette est connectée\nVeuillez appuyer sur le calibrage du bouton l'accueil","Der Controller ist verbunden.\nBitte drücken Sie zur Kalibrierung die Home-Taste.","Il controller è collegato\nPremi la calibrazione del pulsante Home.","El controlador está conectado\nPor favor, presione la tecla de calibración de Inicio"
+Controller_DisConnected,控制器已断开\n即将切换到简单模式,"Controller has been disconnected\nWill switch to the simple mode",컨트롤러 연결이 해제되었습니다. ,"コントローラーの接続が切れました。シンプルモードに切り替えます。","La manette a été déconnectée\nPassera au modèle simple","Controller wurde getrennt\nWechselt zum einfachen Modus","Il controller è stato scollegato\nper passare al modello semplice","El controlador se ha desconectado\nSe cambiará al modelo sencillo"
+Controller_DisConnected_CV,控制器已断开,Controller has been disconnected,컨트롤러 상태를 확인해주세요.. 
+back,返回,Back,이전,戻る,Retour,Zurück,Indietro,Atrás
+startappinunityedit,只能在真机中启动应用,please start app in device,please start app in device,전용 HMD에서만 실행할 수 있습니다.,please start app in device,please start app in device
+Screen_casting_failed,投屏失败请稍后再试,Screen casting failed please try again later,스크린 미러링을 위한 영상 전송에 실패하였습니다. 나중에 다시 시도해주세요,Screen casting failed please try again later,Screen casting failed please try again later,Screen casting failed please try again later,Screen casting failed please try again later
+Network_connection_reconnecting,网络连接异常，正在重连，请稍候...,Network connection abnormal,인터넷 연결이 안정적이지 않아 재접속중입니다. 기다려주세요.,Network connection abnormal，reconnecting，please wait...,Network connection abnormal，reconnecting，please wait...,Network connection abnormal，reconnecting，please wait...,Network connection abnormal，reconnecting，please wait...
+Application_initialization_failed,应用初始化失败,Application initialization failed,어플리케이션 초기화 실패,Application initialization failed,Application initialization failed,Application initialization failed,Application initialization failed
+Application_startup,应用启动中...,Application startup...,어플리케이션 시작중,Application startup,Application startup,Application startup,Application startup
+Application_exit,应用退出中...,Application exit...,어플리케이션 종료중,Application exit...,Application exit...,Application exit...,Application exit...
+user_not_logged,当前用户未登录，无法使用投屏功能！,The current user is not logged in and cannot use the screen casting function!,로그인 되어있지 않아, 스크린 미러링을 사용할 수 없습니다.,current user is not logged,current user is not logged
+want_quit,您确认要退出吗？,Are you sure you want to quit?,정말로 종료하시겠습니까?,Are you sure you want to quit?,Are you sure you want to quit?,Are you sure you want to quit?,Are you sure you want to quit?
+network_error_exit,网络连接异常请检查网络，按确认键退出,Please check the network connection，Press ok to exit,네트워크 연결 상태를 확인해 주세요. 나가시려면 OK 버튼을 눌러주세요.,Please check the network connection，Press ok to exit,Please check the network connection，Press ok to exit,Please check the network connection，Press ok to exit
+resources_are_fully,亲爱的用户，目前资源已经被完全占满，请稍后尝试!,Dear users， the current resources are fully occupied， please try later!,사용자가 많아 접속이 어렵습니다. 나중에 다시 시도해주세요.,Dear users, the current resources are fully occupied, please try later!,Dear users, the current resources are fully occupied, please try later!,Dear users, the current resources are fully occupied, please try later!,Dear users, the current resources are fully occupied, please try later!
+insert_nolo_re-enter_game,请插入nolo后重新进入游戏,Please insert nolo and re-enter the game,nolo를 인식하시고 다시 실행해 주세요.,Please insert nolo and re-enter the game,Please insert nolo and re-enter the game,Please insert nolo and re-enter the game,Please insert nolo and re-enter the game
+Please_select,请选择,Please select,선택해주세요,Please select,Please select,Please select,Please select
+Please_select_server,请选择距离您最近的服务器,Please select the server nearest to you.,최근 서버를 선택하십시오.,Please select the server nearest to you.
+TV_for_screen,电视投屏,TV for screen,스크린 미러링,TV for screen,TV for screen,TV for screen,TV for screen
+Close_screen,关闭投屏,Close shot screen,스크린 미러링 종료,Close shot screen,Close shot screen,Close shot screen,Close shot screen
+Projective_connection,投屏连接中,Projective connection,스크린 미러링 연결중,Projective connection,Projective connection,Projective connection,Projective connection
+Quit_the_game,退出游戏,Quit the game,게임 종료,Quit the game,Quit the game,Quit the game,Quit the game
+left_hand_habit,切换到左手习惯,left hand habit,왼손잡이 모드로 변경, to the left hand habit,Switch to the left hand habit,Switch to the left hand habit,Switch to the left hand habit
+right_hand_habit,切换到右手习惯,right hand habit,오른손잡이 모드로 변경,to the right hand habit,Switch to the right hand habit,Switch to the right hand habit,Switch to the right hand habit
+close,关闭,close,메뉴 나가기,close,close,close,close
+cancel,取消,cancel,취소,cancel,cancel,cancel
+ok,确定,ok,확인,ok,ok,ok,ok
+function_not_enabled,此功能暂未开通,This function is not yet enabled,이 기능은 잠시 개통 되지 않았다.
+exitsure,您确认要退出吗,Are you sure you want to quit,탈퇴 하시겠습니까?
+safeTipsTitle,请回到安全区域内,Please back into the safe zone,Please back into the safe zone
+safeTipsDesc,若需重置位置，请确保周围半径1.2米范围内没有障碍物，将手柄指向前方，长按【Home键】,To reset safe zone，please insure there have no obstacles in the radius of 1.2 meters，then long press on the 【home button】 on headset,To reset safe zone，please insure there have no obstacles in the radius of 1.2 meters，then long press on the 【home button】 on headset
+PowerLess,电量不足s%，请及时给设备充电,Power is less than s%, please charge your devic,Power is less than s%, please charge your devic
+safeResetTips,安全区域已重置，请摘下头盔，确保周围半径1.2米内没有障碍物，并点击【确认键】,Safe zone has reset successfully, please insure there have no obstacles in the radius of 1.2 meters，then press on 【confirm button】,Safe zone has reset successfully, please insure there have no obstacles in the radius of 1.2 meters，then press on 【confirm button】
+resetSafe,请摘下头盔，确保周围半径1.2米范围内没有障碍物，再次点击【确认键】重置位置,Please take off the headset，insure there have no obstacles in the radius of 1.2 meters，then press on 【confirm button】 again,Please take off the headset，insure there have no obstacles in the radius of 1.2 meters，then press on 【confirm button】 again
+HotRecommendations,热门推荐,HotRecommendations,추천
+NoMoreContent,啊哦，没有更多内容了~,Oh, no more~,Oh, no more~
+NoVideoRecord,您还没有观看视频记录,You haven't watched the video yet,You haven't watched the video yet
+NoGameRecord,您还没有玩游戏记录,You haven't played the game yet,You haven't played the game yetbindCheckCode,请通过机顶盒绑定校验码:checkCode ，并点击确定按钮开始投屏,Please bind the check code through the set-top box:checkCode，and click the Ok button to cast the screen,Please bind the check code through the set-top box:checkCode，and click the Ok button to cast the screen
+setboxupdate,请摘下头盔并参考机顶盒升级提示进行升级,Please take off the helmet and refer to the upgrade tips of setbox for upgrade,헬멧을 벗고 오르골 업그레이드 팁을 참고하세요.
+age19,您的年龄太小无法浏览该内容,You are too young to view this content,너 는 너무 어 려 서 이런 내용 을 볼 수 없다.
+needOrder,您尚未订购该应用，无法启动,You haven't ordered the app yet and can't start it,You haven't ordered the app yet and can't start it
+startAppFirst,请先启动应用,Please start the app first,Please start the app first

@@ -1,0 +1,403 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class ScrollController : MonoBehaviour,IScrollController
+{
+    //public ScrollControllerTest controllerTest;
+
+
+    [SerializeField]
+    private UIScrollView mScrollView;
+
+    [SerializeField]
+    private UIWrapContent mWrapContent;
+
+    [SerializeField]
+    private float mSpeeder = 40;
+   
+    /// <summary>
+    /// 是否回弹
+    /// </summary>
+    [SerializeField]
+    private bool isSpringBack = true;
+
+    /// <summary>
+    /// 有多少列
+    /// </summary>
+    [SerializeField]
+    private int columnCount = 3;
+    [SerializeField]
+    private BaseScrollRow[] mScrollRows;
+    [SerializeField]
+    private UIScrollBar mScrollBar;
+
+    /// <summary>
+    /// 滑动速度
+    /// </summary>
+    [SerializeField]
+    private float strength = 10;
+         
+
+    private List<BaseScrollRow> mScrollRowList;
+
+    private Vector3 mStartPos;
+    private Vector3 mToPos;
+
+    private float maxY;
+    private float minY;
+
+    private List<BaseData> mDataList;
+
+    int indexCur = 0;
+
+    bool initView = false;
+
+
+    void Awake()
+    {
+        if(mWrapContent != null && mScrollView.movement == UIScrollView.Movement.Vertical)
+        {
+            mWrapContent.maxIndex = 0;  /**竖直循环滚动中，index值为负，所以maxIndex为零*/
+        }
+        SliderController.OnUp += OnUp;
+        SliderController.OnDown += OnDown;
+    }
+
+
+	// Use this for initialization
+	void Start ()
+    {
+        Init();
+    }
+
+
+
+
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        if(Input.GetAxis("Vertical") > 0.9f)
+        {
+            OnUp();
+        }
+        else if(Input.GetAxis("Vertical") < -0.9f)
+        {
+            OnDown();
+        }
+
+	}
+
+
+    /// <summary>
+    /// 按“下”
+    /// </summary>
+    void OnDown()
+    {
+        if (!gameObject.activeSelf)
+            return;
+        mToPos = new Vector3(mScrollView.transform.localPosition.x, mScrollView.transform
+                                  .localPosition.y + mSpeeder, mScrollView.transform.localPosition.z);
+        if(isSpringBack)
+        {
+            //maxY += mWrapContent.itemSize * 0.5f;
+            if (mToPos.y > maxY + mWrapContent.itemSize * 0.5f) mToPos.y = maxY + mWrapContent.itemSize * 0.5f;
+        }
+        else
+        {
+            if (mToPos.y > maxY)
+            {
+                mToPos.y = maxY;
+            }
+        }
+        RefreshCurIndex(mToPos.y);
+        SpringPanel.Begin(mScrollView.gameObject, mToPos, strength).onFinished = () =>
+        {
+            if (mScrollRows.Length >= SCDataCount())
+            {
+                mToPos.y = mStartPos.y + (SCDataCount() - 2) * mWrapContent.itemSize;
+                if(mToPos.y < mStartPos.y)
+                {
+                    mToPos.y = mStartPos.y;
+                }
+                SpringPanel.Begin(mScrollView.gameObject, mToPos, strength);
+            }
+            else if(mScrollView.transform.localPosition.y >= maxY)
+            {
+                mToPos.y = maxY;
+                SpringPanel.Begin(mScrollView.gameObject, mToPos, strength);
+            }
+        };
+    }
+
+    /// <summary>
+    /// 按“上”
+    /// </summary>
+    void OnUp()
+    {
+        if (!gameObject.activeSelf)
+            return;
+        mToPos = new Vector3(mScrollView.transform.localPosition.x, mScrollView.transform
+                                  .localPosition.y - mSpeeder, mScrollView.transform.localPosition.z);
+        if (isSpringBack)
+        {
+            if(mToPos.y < minY - mWrapContent.itemSize * 0.5f)
+            {
+                mToPos.y = minY - mWrapContent.itemSize * 0.5f;
+            }
+        }
+        else
+        {
+            if (mToPos.y < minY)
+                mToPos.y = minY;
+        }
+        RefreshCurIndex(mToPos.y);
+        SpringPanel.Begin(mScrollView.gameObject, mToPos, strength).onFinished = () =>
+        {
+            if (mScrollView.transform.localPosition.y <= mStartPos.y || mWrapContent.minIndex == -1)
+            {
+                mToPos.y = mStartPos.y;
+                SpringPanel.Begin(mScrollView.gameObject, mToPos, strength);
+            }
+        } ;
+    }
+
+
+    /// <summary>
+    /// 初始化数据（第一次传入数据时调用， isReset为True; 刷新数据时如果需要回到第一行调用，isReset为True，否则调用 RefreshScrollView）
+    /// </summary>
+    /// <param name="list">数据</param>
+    /// <param name="isReset"> 是否重置（回到顶部） </param>
+    public void InitDataList(List<BaseData> list, bool isReset = false)
+    {
+        mDataList = list;
+        Init();
+        if (mDataList == null || mDataList.Count <= 0)
+        {
+            Debug.LogError("数据列表为空");
+            mScrollView.gameObject.SetActive(false);
+        }
+        else  mScrollView.gameObject.SetActive(true); 
+
+        mWrapContent.minIndex = 0 - SCDataCount() + 1;
+        SetMaxYAndMinY();
+        if (mWrapContent.minIndex >= 0)
+        {
+            mWrapContent.minIndex = -1;
+        }
+        mWrapContent.onInitializeItem = SCRowItemDataUpdate;
+        mWrapContent.onScrollEndItem = SCGetMoreDatas;
+        if (isReset)
+        {
+            mScrollView.ResetPosition();
+            mWrapContent.SortBasedOnScrollMovement();
+            mWrapContent.UpdateAllItem();
+            indexCur = 0;
+        }
+        else
+        {
+            for (int i = 0, length = mScrollRows.Length; i < length; i++)
+            {
+                mScrollRows[i].UpdateData(mScrollRows[i].mRowIndex);
+            }
+        }
+    }
+
+
+    /// <summary>
+    ///  记录scrollView等的初始化信息
+    /// </summary>
+    void Init()
+    {
+        if(!initView)
+        {
+            initView = true;
+            mScrollView.GetComponent<UIPanel>().onClipMove += OnMove;
+            mStartPos = mScrollView.transform.localPosition;
+            if (mScrollRows == null || mScrollRows.Length <= 0)
+            {
+                Debug.LogError("ScrollRows is null");
+                return;
+            }
+            for (int i = 0, length = mScrollRows.Length; i < length; i++)
+            {
+                mScrollRows[i].Init(this);
+                mScrollRows[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 计算最大Y值和最小Y值
+    /// </summary>
+    private void SetMaxYAndMinY()
+    {
+        maxY = Mathf.Abs(mWrapContent.minIndex + 1) * mWrapContent.itemSize + mStartPos.y;
+        minY = mStartPos.y;
+        if (mScrollBar != null)
+        {
+            mScrollBar.gameObject.SetActive(true);
+            mScrollBar.barSize = Mathf.Max(1 / (float)SCDataCount() * 2f,
+                                           5f / (float)mScrollBar.backgroundWidget.height);
+            mScrollBar.value = (mScrollView.transform.localPosition.y - mStartPos.y) / (maxY - mStartPos.y);
+        }
+    }
+
+
+    void OnMove(UIPanel panel)
+    {
+        if(isSpringBack)
+        {
+            if ((int)mScrollView.transform.localPosition.y >= (int)(maxY + mWrapContent.itemSize * 0.5f))
+            {
+                SCGetMoreDatas();
+            }
+        }
+        else
+        {
+            if (mScrollView.transform.localPosition.y >= maxY)
+            {
+                SCGetMoreDatas();
+            }
+        }
+
+        if(mScrollBar != null)
+            mScrollBar.value = (mScrollView.transform.localPosition.y - mStartPos.y) / (maxY - mStartPos.y);
+    }
+
+
+    /// <summary>
+    /// 刷新列表  （数据刷新时调用，多为有删除数据时调用）
+    /// </summary>
+    public void RefreshScrollView()
+    {
+        if(indexCur > SCDataCount() - 2)
+        {
+            indexCur = SCDataCount() - 2;
+        }
+        else if (indexCur < 0)
+        {
+            indexCur = 0;
+        }
+        mToPos = new Vector3(mScrollView.transform.localPosition.x, mStartPos.y + indexCur * mWrapContent
+                              .itemSize, mScrollView.transform.localPosition.z);
+        SpringPanel.Begin(mScrollView.gameObject, mToPos, 20).onFinished = () =>
+        {
+             mWrapContent.UpdateAllItem();
+        };
+    }
+
+
+
+
+    /// <summary>
+    /// 计算当前滑到哪一行
+    /// </summary>
+    /// <param name="y"></param>
+    private void RefreshCurIndex(float y)
+    {
+        indexCur = Mathf.RoundToInt(y / mWrapContent.itemSize);
+        if(indexCur > SCDataCount() - 2)
+        {
+            indexCur = SCDataCount() - 2;
+        }
+        else if(indexCur < 0)
+        {
+            indexCur = 0;
+        }
+    }
+
+
+
+    /// <summary>
+    /// 滚动视图中的数据个数
+    /// </summary>
+    /// <returns></returns>
+    public int SCDataCount()
+    {
+        int count = 0;
+        if(mDataList != null)
+        {
+            count = mDataList.Count / columnCount;
+            if (mDataList.Count % columnCount > 0)
+                count += 1;
+        }
+        return count;
+    }
+
+    /// <summary>
+    /// 获取滚动视图中的指定序号上的数据
+    /// </summary>
+    /// <param name="dataIndex"></param>
+    /// <returns></returns>
+    public object SCGetData(int dataIndex)
+    {
+        object data = null;
+        if (mDataList != null)
+        {
+            if(dataIndex >= 0 && dataIndex < mDataList.Count)
+            {
+                data = mDataList[dataIndex];
+            }
+        }
+        return data;
+    }
+
+    /// <summary>
+    /// 是否可以调用获取数据  （滑到底部时只调用一次，在获取数据成功之前不可再次调用，亦可以加入其他的条件）
+    /// </summary>
+    bool isCanGetNewData = true;
+
+    /// <summary>
+    /// 获取更多数据成功后 (请求数据响应成功并解析添加完成后调用 可用委托事件的方式调用；例如wing里面的请求网络数据响应成功并解析后 )
+    /// </summary>
+    public void SCOnGetMoreDatasSuccess()
+    {
+        mWrapContent.minIndex = 0 - SCDataCount() + 1;
+        if (mWrapContent.minIndex >= 0)
+        {
+            mWrapContent.minIndex = -1;
+        }
+        SetMaxYAndMinY();
+        indexCur += 1;
+        RefreshScrollView();
+        isCanGetNewData = true;
+    }
+
+    //IEnumerator GetNewDatas()
+    //{
+    //    yield return new WaitForSeconds(1f);
+    //    controllerTest.DatasStructure();
+    //}
+
+
+    /// <summary>
+    /// 获取更多的数据   （如：wing里面的发起网络请求数据）
+    /// </summary>
+    public void SCGetMoreDatas()
+    {
+        if (isCanGetNewData)
+        {
+            //controllerTest.getNewData = SCOnGetMoreDatasSuccess;
+            //StartCoroutine(GetNewDatas());
+            //isCanGetNewData = false;
+        }
+        
+    }
+
+
+    /// <summary>
+    /// 滚动视图滚动时数据刷新
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="wrapIndex"></param>
+    /// <param name="realIndex"></param>
+    public void SCRowItemDataUpdate(GameObject go, int wrapIndex, int realIndex)
+    {
+        int rowDataIndex = Mathf.Abs(realIndex); /**竖直滑动时realIndex为负，所以取绝对值**/
+        go.GetComponent<BaseScrollRow>().UpdateData(rowDataIndex);
+        go.name = realIndex.ToString();
+    }
+}

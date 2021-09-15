@@ -1,0 +1,213 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+/// <summary>
+/// 友好提示
+/// </summary>
+public class TipsControl : MonoBehaviour {
+    [SerializeField]
+    private GameObject appControlTips;
+    [SerializeField]
+    private GameObject setingBt;
+    [SerializeField]
+    private CommonPlane commonPlane;
+    private Transform center;
+ 
+
+    private MyDialog mydialog;
+    /**
+   * 距离相机的位置
+   * */
+
+    public int distance = 3;
+
+   
+    public enum TipesType {
+        /// <summary>
+        /// 退出提示
+        /// </summary>
+        showExitTips
+    }
+    // Use this for initialization
+    void Start () {
+        GameObject gamePlane = GameObject.Find("GamePlane");
+        mydialog = commonPlane.getDialog();
+        if (gamePlane != null)
+        {
+            center = gamePlane.transform;       
+            SystemAppTips appTips=null;//= gameObject.GetComponentInChildren<SystemAppTips>();//app键提示
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.name.Equals("controllerApp"))
+                {
+                    GameObject controllerApp = child.gameObject;
+                    appTips = child.gameObject.GetComponent<SystemAppTips>();
+                    break;
+                }
+            
+            }       
+            if (appTips == null)
+                Debug.LogError("SystemAppTips 必须添加到controllerApp上");
+            appTips.setCenter(center);
+        }
+        else
+        {
+            Debug.LogError("GamePlane 预设无法获取");
+        }
+
+        if (appControlTips == null|| setingBt==null|| mydialog==null)
+            Debug.LogError("param appControl,exitBt ,mydialog can not be null");
+        //StartCoroutine(testwhile());
+	}
+    IEnumerator testwhile()
+    {
+        yield return new WaitForSeconds(10);
+        int i = 0;
+        /****/
+        while (true) {
+            if (i > 100000)
+                i = 0;
+            i = i + 1;
+            Debug.Log("num多少？？？？？？ " + i);
+        }
+        //yield return null;
+
+
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        //Debug.Log("============Update==========================");
+      
+
+
+        if (GameAppControl.getGameRuning())
+        {
+
+            if (CommonPlane.handlerList != null)
+            {
+                //手柄连接上时并且有设置键 需要隐藏设置键
+                if (setingBt.gameObject.activeSelf)
+                {
+                    setingBt.gameObject.SetActive(false);
+                }
+                if (menuKeyDown())
+                {
+                    //游戏运行时点击应用键退出
+
+                    Debug.Log("ucvr click App key game runing isShowSetingDialog"+ SetingDialog.isShowSetingDialog);
+
+                    if (SetingDialog.isShowSetingDialog)
+                    {
+                      
+                        commonPlane.closeAllDialog();
+                        
+                    }
+                    else
+                    {
+                        commonPlane.closeAllDialog();
+                        commonPlane.showSetingDialog();
+                    }
+                }
+            }
+            else {//没有手柄时需要显示设置按钮
+                menuDown = false;
+                _touchDown = false;
+                _triggerDown = false;
+                if (!setingBt.gameObject.activeSelf)
+                {
+                    Debug.Log("ucvr mei you shou bing lianjie xianshi shezhi");
+                    setingBt.gameObject.SetActive(true);
+                }
+            }
+            
+        }
+    }
+
+    private bool menuDown = false;//菜单键是否可用
+    private bool _touchDown = false;//按键按下是瞬时的需要保存按下的状态
+    private bool _triggerDown = false;
+    public static bool ZUHEJIAN = true;
+    /**
+     * 判断菜单键是否按下
+     * */
+    private bool menuKeyDown() {
+        if (ZUHEJIAN == false) {//非组合键
+            return  ControllerTool.getControllerBtUp(CyberCloud_UnitySDKAPI.ControllerKeyCode.APP);
+
+        }
+        bool touchPaddown = ControllerTool.getControllerBtDown(CyberCloud_UnitySDKAPI.ControllerKeyCode.TOUCHPAD);
+        if (touchPaddown)
+        {
+            _touchDown = true;
+        }
+        else
+        {
+            bool touchPadup = ControllerTool.getControllerBtUp(CyberCloud_UnitySDKAPI.ControllerKeyCode.TOUCHPAD);
+            if (touchPadup)
+            {
+                _touchDown = false;
+            }
+        }
+        bool triggrtdown = ControllerTool.getControllerBtDown(CyberCloud_UnitySDKAPI.ControllerKeyCode.TRIGGER);
+        if (triggrtdown)
+        {
+            _triggerDown = true;
+        }
+        else {
+            bool triggrtUp = ControllerTool.getControllerBtUp(CyberCloud_UnitySDKAPI.ControllerKeyCode.TRIGGER);
+            if(triggrtUp)
+                _triggerDown = false;
+        }
+       
+        if (_triggerDown && _touchDown)
+        {
+            if (menuDown)//如果按下中只返回一次下次等弹起后再返回
+                return false;
+            menuDown = true;
+            
+        }
+        else
+            menuDown = false;
+  
+        //Debug.Log("ucvr _triggerDown:" + _triggerDown + ";_touchDown:" + _touchDown+ ";menuDown:"+ menuDown);
+        return menuDown;
+    }
+ 
+    /// <summary>
+    /// 如果有手柄显示 点击app键弹出系统菜单提示
+    /// 如果没有手柄显示退出按钮
+    /// </summary>
+    /// <param name="display">是显示还是隐藏</param>
+    /// <param name="type"></param>
+    public void dispalyCursorTips(bool display, TipesType type) {
+        if (display == false) {
+            appControlTips.SetActive(false);
+            Debug.Log("ucvr close tips");
+            return;
+        }
+        if (type == TipesType.showExitTips&&DialogBase.isShow==false)
+        {       
+            /**
+             *     * **/
+              //弹出退出提示
+            if (CommonPlane.handlerList != null)
+            {
+                Debug.Log("ucvr you shou bing lianjie ");
+                setingBt.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("ucvr mei you shou bing lianjie xianshi shezhi");
+                //没有手柄连接时显示退出按钮
+                setingBt.gameObject.SetActive(true);
+            }
+            appControlTips.SetActive(true);
+
+        }
+
+    }
+   
+ 
+
+}

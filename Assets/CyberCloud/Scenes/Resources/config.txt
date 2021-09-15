@@ -1,0 +1,50 @@
+//文件必须保存成utf8编码注意必须
+//系统配置没有特殊要求不要手动修改playersettings，playersettings会有程序自动填充
+[playersettings]
+//公司名称--无特殊需求不要动
+companyName=CyberCloud
+//产品名--无特殊需求不要动
+productName=号百vr
+//包名
+applicationIdentifier=com.cybercloud.vr
+//版本号根据svn号自动生成3078
+bundleVersion=3.0.0.3078
+//版本号根据svn号自动生成3078
+bundleVersionCode=3078
+//签名文件绝对路径, D:\cyber.keystore 没有请不要配置 piconeo不需要配置
+keystorePath=
+//签名密码Pwd_apk 没有请不要配置 
+keystorePass=
+//别名signcyber 没有请不要配置 
+keyaliasName=
+//别名密码Pass4CyberSign 没有请不要配置 
+keyaliasPass=
+//打包apk名称
+apkName=Cyber_portal_PicoNeo2
+//应用ico 放 Resource 下,不要加后缀（自动换图标的这个功能未调通目前还需要手动将图片拷贝到Resource目录并命名为cyberico.png）
+defaultIcon=cyberico
+//系统配置根据地区环境不同需要手动修改*******************************************************************************************************
+[systemsettings]
+//两种发布模式debug和release， debug发布模式允许读取sdcard中的配置文件，release模式不再读取sdcard的配置而是以此处配置为准
+publish=debug
+//180.96.64.11为号百gds地址此处无用，
+tls=180.96.64.11:4567
+//头盔类型1、Pico；2、Pico2；3、skyworth；4：DaPeng；5：Other;6:PicoNeo2
+deviceType=PicoNeo2
+//终端类型，用于判断与前端通信使用udp或tcp通信的依据，使用前需要在中心管理网站配置终端类型对应的通信协议，再将对应的终端类型配置到此处 默认值是0 
+terminalType=624631811
+//项目场景1、LGU+ lg项目 2、FuJian 福建项目 3、YanShi 演示项目包名是com.picovr.sbygame 4、YanShi2 家麒设计的简化版本演示系统,5\TianYiYueDu 天翼阅读
+cvrScreen=TianYiYueDu
+//apk的使用语言可配置分别是1、中文 、2、英文 3、韩文配置分别配置为 1、zh,2、en,3、ko
+cvrLanguage=zh
+//是否自动启动投屏测试服务自动自动后无需手动点击openTcp按钮
+autoStartCastScreenTestService=1
+//是否开启自动投屏只有autoStartCastScreenTestService有效时才生效
+autoStartCastScreen=0
+//应用启动映射，每组映射之间以‘;’分号分隔,分组内以‘:’冒号分隔，组内的配置顺序是：screenNo:index:appID（场景码+位置好+应用id）ScreenNo1:1:70000951;ScreenNo2:2:90001014
+mapapps=
+//需要定制展示的分类类型 如app、 video，此处的行业分类必须在cms配置的一级分类中有
+classificationOfProfessions=
+//是否启用新的投屏屏支持协议(投屏视频流单独一路编码并推送) 1、支持新的srt投屏协议 0、是不支持
+newScreenProtocol=1
+usePingCmd=0
